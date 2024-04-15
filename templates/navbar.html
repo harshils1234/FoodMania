@@ -1,0 +1,120 @@
+{% load static %}
+<!--Navbar-->
+<nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background: rgba(108, 117, 125, 0.6)">
+    <div class="container-fluid">
+        {% if user.is_superuser or user.is_staff %}
+        <a class="navbar-brand" href="{% url 'foodmania_website:dashboard' %}"
+           style="color: rgba(11, 122, 114, 1)"><b>ADMIN MANAGEMENT</b></a>
+        {% else %}
+        <a class="navbar-brand" href="{% url 'foodmania_website:website' %}"
+           style="color: rgba(11, 122, 114, 1)"><b>FOODMANIA</b></a>
+        {% endif %}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {% if user.is_superuser or user.is_staff %}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'foodmania_website:order_list' %}"
+                       style="color: rgba(11, 122, 114, 1);font-size: 18px;">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user:user_list' %}"
+                       style="color: rgba(11, 122, 114, 1);font-size: 18px;">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'foodmania:category_list' %}"
+                       style="color: rgba(11, 122, 114, 1);font-size: 18px;">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'foodmania:food_list' %}"
+                       style="color: rgba(11, 122, 114, 1);font-size: 18px;">Foods</a>
+                </li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'foodmania:food_list' %}"
+                       style="color: rgba(11, 122, 114, 1);font-size: 18px;">Menu</a>
+                </li>
+            </ul>
+            {% endif %}
+            <ul class="navbar-nav d-flex flex-row ms-auto me-3">
+                {% if user.is_superuser or user.is_staff %}
+                {% else %}
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <button class="btn btn-tertiary position-relative"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="Cart Total: {{ request.user.mycart.last.set_total }}"
+                            style="margin-top: 8px;margin-right: 15px;background: rgba(108, 117, 125, 0.6)"
+                            onclick="location.href='{% url 'foodmania_website:cart' %}'">
+                        <i class="fa-solid fa-cart-shopping fa-2xl" style="color: #01514b;"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge
+                    rounded-pill bg-primary" id="cartItemQuantity">
+                        {{ request.user.mycart.last.total_items }}
+                    </span>
+                    </button>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <button class="btn btn-primary" onclick="location.href='{% url 'user:login' %}'">
+                        Login/Register
+                    </button>
+                </li>
+                {% endif %}
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li class="nav-item me-3 me-lg-0 dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{ user.image.url }}" class="rounded-circle" height="40" width="50"
+                             loading="lazy"/>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
+                        <li><p class="dropdown-item">Hello, <b>{{ user.username }}</b></p></li>
+                        <li><a class="dropdown-item" href="{% url 'user:profile' user.id %}">
+                            <i class="fa-solid fa-user"></i> My Profile</a>
+                        </li>
+                        {% if user.is_superuser or user.is_staff %}
+                        <li><a class="dropdown-item" href="{% url 'admin:index' %}">
+                            <i class="fa-solid fa-globe"></i> Admin Site</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'foodmania_website:website' %}">
+                            <i class="fa-solid fa-globe"></i> My Website</a>
+                        </li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="{% url 'user:address_list' %}">
+                            <i class="fa-solid fa-address-card"></i> My Address
+                        </a></li>
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'foodmania_website:order_list' %}">
+                                <i class="fa-solid fa-address-card"></i> My Orders
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li>
+                            <form method="post" action="{% url 'user:logout' %}">
+                                {% csrf_token %}
+                                <button class="dropdown-item" type="submit">
+                                    <i class="fa-solid fa-users"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End Navbar -->
+
+<link type="text/css" rel="stylesheet" href="{% static 'css/navbar.css' %}"/>

@@ -1,0 +1,253 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="row">
+    <img src="/media/WELCOME TO FOODMANIA.jpg" width="600px">
+</div>
+<br>
+<div class="card">
+    <div class="row">
+        <div class="col-md-12 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col">
+                        <h3 style="color: rgba(11, 122, 114, 1);">ABOUT US</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row main align-items-center">
+                    <div class="col">
+                        <p style="color: rgba(11, 122, 114, 1);font-size: 25px;">
+                            Welcome to Foodmania, your ultimate food destination!
+                            We believe that great food has the power to bring people together,
+                            even in a virtual setting. At Foodmania, we've curated a menu of culinary
+                            delights that can be enjoyed from the comfort of your own home. Our team of talented
+                            chefs is dedicated to preparing exquisite dishes that burst with flavor and showcase
+                            the best of cuisine. From tantalizing appetizers to mouthwatering main
+                            courses and decadent desserts, each dish is carefully crafted using the finest
+                            ingredients and delivered right to your doorstep. We pride ourselves on providing
+                            a seamless online ordering experience, ensuring that your meal arrives fresh and
+                            ready to be savored. Join us in celebrating the joy of online dining and let us bring
+                            the restaurant experience to you.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="card">
+    <div class="row">
+        <div class="col-md-12 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col">
+                        <h3 style="color: rgba(11, 122, 114, 1);">OUR POPULAR DISHES</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row main align-items-center">
+                    <div class="col">
+                        <div class="card h-100" style="background: rgba(223, 236, 248, 1)">
+                            <img src="/media/food_images/pizza_image.jpg" class="card-img-top" alt="Food Image"
+                                 style="max-width:100%;min-width:100%;width:450px;height:150px;">
+                            <div class="card-body">
+                                <h5 class="card-title">7' Cheese pizza</h5>
+                                <p class="card-text">Restaurant Special</p>
+                                <b class="card-text">₹ 320</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100" style="background: rgba(223, 236, 248, 1)">
+                            <img src="/media/food_images/pasta_image.jpg" class="card-img-top" alt="Food Image"
+                                 style="max-width:100%;min-width:100%;width:450px;height:150px;">
+                            <div class="card-body">
+                                <h5 class="card-title">Pasta</h5>
+                                <p class="card-text">Spicy</p>
+                                <b class="card-text">₹ 120</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100" style="background: rgba(223, 236, 248, 1)">
+                            <img src="/media/food_images/sandwich_image.jpg" class="card-img-top" alt="Food Image"
+                                 style="max-width:100%;min-width:100%;width:450px;height:150px;">
+                            <div class="card-body">
+                                <h5 class="card-title">Jumbo Sandwich</h5>
+                                <p class="card-text">Sandwich</p>
+                                <b class="card-text">₹ 150</b>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="display: flex; justify-content:flex-end;margin-top: 25px;">
+                        <div style="display: flex; justify-content:flex-end">
+                            <button type="submit" class="btn btn-primary"
+                                    onclick="window.location.href='{% url 'foodmania:food_list' %}'">
+                                Our Menu
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="card">
+    <div class="row">
+        <div class="col-md-12 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col">
+                        <h3 style="color: rgba(11, 122, 114, 1);">BOOK YOUR STAY WITH US</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row main align-items-center">
+                    <div class="col">
+                        <form method="POST" id="reservation">
+                            {% csrf_token %}
+                            {% if reservation.errors %}
+                            {% for key, error in reservation.errors.items %}
+                            {{ error }}
+                            {% endfor %}
+                            {% endif %}
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Name</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="r-name-icon">
+                                    <i class="fa-solid fa-user" style="color: #0b7a72;"></i>
+                                </span>
+                                {% render_field reservation.name class="form-control" placeholder="Enter your name" aria-describedby="r-name-icon" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Email</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="r-email-icon">
+                                    <i class="fa-solid fa-envelope" style="color: #0b7a72;"></i>
+                                </span>
+                                {% render_field reservation.email class="form-control" placeholder="Enter your email address" aria-describedby="r-email-icon" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Date</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="r-date-icon">
+                                    <i class="fa-solid fa-calendar-days" style="color: #0b7a72;"></i>
+                                </span>
+                                {% render_field reservation.date class="form-control" placeholder="Enter date" aria-describedby="r-date-icon" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Time</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="r-time-icon">
+                                    <i class="fa-solid fa-clock" style="color: #0b7a72;"></i>
+                                </span>
+                                {% render_field reservation.time class="form-control" placeholder="Enter time" aria-describedby="r-time-icon" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Number of People</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="r-people-icon">
+                                    <i class="fa-solid fa-users" style="color: #0b7a72;"></i>
+                                </span>
+                                {% render_field reservation.people class="form-control" placeholder="Enter number of people" aria-describedby="r-people-icon" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Message</label>
+                            <div class="input-group mb-3">
+                                {% render_field reservation.message class="form-control" placeholder="Enter your message" %}
+                            </div>
+                            <br>
+                            <div style="display: flex; justify-content:flex-end">
+                                <div style="display: flex; justify-content:flex-end">
+                                    <button type="submit" class="btn btn-primary"
+                                            onclick="window.location.href='{% url 'foodmania_website:website' %}'">
+                                        Book Reservation
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="card">
+    <div class="row">
+        <div class="col-md-12 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col">
+                        <h3 style="color: rgba(11, 122, 114, 1);">CONTACT US</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row main align-items-center">
+                    <div class="col-6">
+                        <div class="mapouter">
+                            <div class="gmap_canvas">
+                                <iframe class="gmap_iframe" width="100%" frameborder="0"
+                                        scrolling="no" marginheight="0" marginwidth="0"
+                                        src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=Trootech&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <form method="POST" id="contactUs">
+                            {% csrf_token %}
+                            {% if contactus.errors %}
+                            {% for key, error in contactus.errors.items %}
+                            {{ error }}
+                            {% endfor %}
+                            {% endif %}
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Name</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="name-icon">
+                                    <i class="fa-solid fa-user" style="color: #0b7a72;"></i>
+                                </span>
+                                {% render_field contactus.name class="form-control" placeholder="Enter your name" aria-describedby="name-icon" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Email</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="email-icon">
+                                    <i class="fa-solid fa-envelope" style="color: #0b7a72;"></i>
+                                </span>
+                                {% render_field contactus.email class="form-control" placeholder="Enter your email address" aria-describedby="email-icon" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Subject</label>
+                            <div class="input-group mb-3">
+                                {% render_field contactus.subject class="form-control" placeholder="Enter subject" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Message</label>
+                            <div class="input-group mb-3">
+                                {% render_field contactus.message class="form-control" placeholder="Enter your message" %}
+                            </div>
+                            <br>
+                            <div style="display: flex; justify-content:flex-end">
+                                <div style="display: flex; justify-content:flex-end">
+                                    <button type="submit" class="btn btn-primary"
+                                            onclick="window.location.href='{% url 'foodmania_website:website' %}'">
+                                        Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<link type="text/css" rel="stylesheet" href="{% static 'css/cart.css' %}"/>
+<link type="text/css" rel="stylesheet" href="{% static 'css/website.css' %}"/>
+{% endblock content %}
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}

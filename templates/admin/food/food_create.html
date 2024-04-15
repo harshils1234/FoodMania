@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<script>
+function getResponseForFoodUpdate(){
+    getToasterMessage("success", "Food Updated Successfully");
+    setTimeout(function() {
+    $("#updateFood").submit();
+    }, 2000);
+}
+
+</script>
+<!--Create Food Item-->
+<div class="card">
+    <div class="row">
+        <div class="col-md-12 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col">
+                        <h3 style="color: rgba(11, 122, 114, 1);">UPDATE FOOD ITEM</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row main align-items-center">
+                    <div class="col">
+                        <form method="POST" enctype="multipart/form-data" id="updateFood">
+                            {% csrf_token %}
+                            {% if form.errors %}
+                            {% for key, error in form.errors.items %}
+                            {{ error }}
+                            {% endfor %}
+                            {% endif %}
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Item Name</label>
+                            <div class="input-group mb-3">
+                                {% render_field form.name aria-describedby="address-icon" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Description</label>
+                            <div class="input-group mb-3">
+                                {% render_field form.description aria-describedby="pincode-icon" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Price</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="city-icon">
+                                    <i class="fa-solid fa-indian-rupee-sign" style="color: #0b7a72;"></i>
+                                </span>
+                                {% render_field form.price aria-describedby="city-icon" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Item Stock</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="state-icon">
+                                    <i class="fa-solid fa-box-open" style="color: #0b7a72;"></i>
+                                </span>
+                                {% render_field form.stock aria-describedby="state-icon" %}
+                            </div>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Category</label>
+                            <div class="col-md-12">
+                                {% render_field form.category %}
+                            </div>
+                            <br>
+                            <label class="label" style="color: rgba(11, 122, 114, 1)">Status</label>
+                            <div class="col-md-12">
+                                {% render_field form.status %}
+                            </div>
+                            <br>
+                            <div class="col-md-12">
+                                <label class="label" style="color: rgba(11, 122, 114, 1)">Food Image</label>
+                                {{ form.image }}
+                            </div>
+                            <br>
+                            <div style="display: flex; justify-content:flex-end">
+                                <div style="display: flex; justify-content:flex-end">
+                                    <button type="button" class="btn btn-outline-primary"
+                                            onclick="getResponseForFoodUpdate()">
+                                        Update Food Item
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<link type="text/css" rel="stylesheet" href="{% static 'css/user_address.css' %}"/>
+<script src="{% static 'js/food/food.js' %}"></script>
+<script src="{% static 'js/toast.js' %}"></script>
+<script src="{% static 'js/select2.js' %}"></script>
+{% endblock content %}
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}

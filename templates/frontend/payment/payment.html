@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+    var options = {
+        key: "{{ razorpay_key }}",
+        amount: "{{ order.order.order_total }}",
+        currency: "INR",
+        name: "{{ order.user.first_name }} {{ order.user.last_name }}",
+        description: "Test Transaction",
+        image: "/media/foodmania.png",
+        order_id: "{{ order.provider_order_id }}",
+        callback_url: "{{ callback_url }}",
+        redirect: true,
+        prefill: {
+            "name": "{{ order.user.first_name }} {{ order.user.last_name }}",
+            "email": "{{ order.user.email }}",
+            "contact": "{{ order.user.phone_number }}"
+        },
+        notes: {
+            "address": "{{ order.order.delivery_address }}"
+        },
+        theme: {
+            "color": "#0b7a72"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+    </script>
+</form>
+{% endblock content %}
